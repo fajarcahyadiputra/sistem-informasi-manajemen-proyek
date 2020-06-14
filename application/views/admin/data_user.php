@@ -27,13 +27,13 @@
    </div>
    <div class="col-md-6">
      <div class="tombol-atas">
-      <a href="<?php echo base_url('admin/cetak_semua_barcode') ?>"  class="btn btn-outline-info mb-4 " ><i class="fas fa-print mr-1"></i>Ceatak Laporan</a>
+      <a target="_blank" href="<?php echo base_url('admin/cetak_laporan/user/tb_user') ?>"  class="btn btn-outline-info mb-4 " ><i class="fas fa-print mr-1"></i>Ceatak Laporan</a>
       <a  href="<?php echo base_url('admin/halaman_tambah_user') ?>" class="btn btn-outline-info mb-4 mr-3" ><i class="fas fa-user-plus mr-1"></i>Tambah User</a>
     </div>
   </div>
 </div>
 </div>
-<dic class="card-body table-responsive">
+<div class="card-body table-responsive">
   <table class="table table-bordered table-striped table-hover" id="<?php echo $id_tabel ?>">
   <thead>
    <tr>
@@ -61,7 +61,7 @@
 </tbody>
 <?php endforeach ?>
 </table>
-</dic>
+</div>
 </div>
 </div>
  <!-- end container fluid -->

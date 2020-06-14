@@ -54,12 +54,6 @@
   })
  }
 
- $(document).ready(function(){
-
- })
-
-
-
 </script>
 
 

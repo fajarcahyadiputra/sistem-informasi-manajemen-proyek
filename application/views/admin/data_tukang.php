@@ -30,7 +30,7 @@
       </div>
     </div>
   </div>
-  <dic class="card-body table-responsive">
+  <div class="card-body table-responsive">
    <table class="table table-bordered table-striped table-hover" id="<?php echo $id_tabel ?>">
     <thead>
      <tr>
@@ -62,7 +62,7 @@
 </tbody>
 <?php endforeach ?>
 </table>
-</dic>
+</div>
 </div>
 </div>
  <!-- end container fluid -->

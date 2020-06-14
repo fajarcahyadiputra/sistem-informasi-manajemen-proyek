@@ -13,6 +13,7 @@
  		$this->load->model('M_kavling','kavling');
  		$this->load->model('M_tukang','tukang');
  		$this->load->model('M_cash','cash');
+ 		$this->load->library('pdf');
  	}
  	public function index(){
  		$data = [
@@ -120,9 +121,10 @@
  		}
 
  	}
+
  	public function data_konsumen(){
  		$data = [
- 			'konsumen'  => $this->konsumen->tampilDataKonsumen('tb_konsumen'),
+ 			'konsumen'  => $this->konsumen->tampil_konsumen('tb_konsumen'),
  			'title' => 'Halaman Data Konsumen',
  			'id_tabel' => 'tabel_konsumen'
  		];
@@ -133,23 +135,108 @@
  		$this->load->view('admin/templet/footer', $data);
  	}
  	public function halaman_tambah_konsumen(){
- 		echo "hu";
+ 		$data = [
+ 			'title' => 'Halaman Tambah Konsumen',
+ 		];
+
+ 		$this->load->view('admin/templet/header', $data);
+ 		$this->load->view('admin/templet/sidebar');
+ 		$this->load->view('admin/halaman_tambah_konsumnen');
+ 		$this->load->view('admin/templet/footer');
  	}
  	public function tambah_konsumen(){
 
- 	}
- 	public function hapus_konsumen(){
+ 		$id_konsumen = $this->input->post('id_konsumen');
+ 		$noktp		 = $this->input->post('noktp');
+ 		$alamat		 = $this->input->post('alamat');
+ 		$nama		 = $this->input->post('nama');
+ 		$status		 = $this->input->post('status');
+ 		$nohp		 = $this->input->post('nohp');
+ 		$pekerjaan   = $this->input->post('pekerjaan');
+
+ 		$data        = [
+ 			'id_konsumen' => $id_konsumen,
+ 			'noktp'       => $noktp,
+ 			'alamat' 	  => $alamat,
+ 			'nama'		  => $nama,
+ 			'status'      => $status,
+ 			'nohp'		  => $nohp,
+ 			'pekerjaan'   => $pekerjaan
+ 		];
+
+
+ 		$tambah = $this->konsumen->tambah_konsumen('tb_konsumen', $data);
+
+ 		if($tambah){
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-success" style="width: 100%; text-align: center">SELAMAT DATA BERHASIL DI MASUKAN</div>');
+ 			redirect('Admin/data_konsumen');
+ 		}else{
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-danger" style="width: 100%;text-align: center">DATA GAGAL DI MASUKAN</div>');
+ 			redirect('Admin/data_konsumen');
+ 		}
 
  	}
- 	public function halaman_edit_konsumen(){
+ 	public function hapus_konsumen($id){
 
+ 		$where = ['id_konsumen' => $id];
+ 		$hapus = $this->konsumen->hapus_konsumen('tb_konsumen', $where);
+
+ 		if($hapus){
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-success" style="width: 100%; text-align: center">SELAMAT DATA BERHASIL DI HAPUS</div>');
+ 			redirect('Admin/data_konsumen');
+ 		}else{
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-danger" style="width: 100%;text-align: center">DATA GAGAL DI HAPUS</div>');
+ 			redirect('Admin/data_konsumen');
+ 		}
+ 	}
+ 	public function halaman_edit_konsumen($id){
+ 		$data = [
+ 			'konsumen' => $this->konsumen->tampil_konsumen('tb_konsumen',['id_konsumen' => $id]),
+ 			'title' => 'Halaman Edit Konsumen',
+ 		];
+
+ 		$this->load->view('admin/templet/header', $data);
+ 		$this->load->view('admin/templet/sidebar');
+ 		$this->load->view('admin/halaman_edit_konsumen', $data);
+ 		$this->load->view('admin/templet/footer');
  	}
  	public function edit_konsumen(){
 
+ 		$id_konsumen = $this->input->post('id_konsumen');
+ 		$noktp		 = $this->input->post('noktp');
+ 		$alamat		 = $this->input->post('alamat');
+ 		$nama		 = $this->input->post('nama');
+ 		$status		 = $this->input->post('status');
+ 		$nohp		 = $this->input->post('nohp');
+ 		$pekerjaan   = $this->input->post('pekerjaan');
+
+ 		$where       = ['id_konsumen' => $this->input->post('id_konsumen_lama')];
+
+ 		$data        = [
+ 			'id_konsumen' => $id_konsumen,
+ 			'noktp'       => $noktp,
+ 			'alamat' 	  => $alamat,
+ 			'nama'		  => $nama,
+ 			'status'      => $status,
+ 			'nohp'		  => $nohp,
+ 			'pekerjaan'   => $pekerjaan
+ 		];
+
+ 		$edit = $this->konsumen->edit_konsumen('tb_konsumen',$where, $data);
+
+ 		if($edit){
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-success" style="width: 100%; text-align: center">SELAMAT DATA BERHASIL DI EDIT</div>');
+ 			redirect('Admin/data_konsumen');
+ 		}else{
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-danger" style="width: 100%;text-align: center">DATA GAGAL DI EDIT</div>');
+ 			redirect('Admin/data_konsumen');
+ 		}
+
  	}
+
  	public function data_kavling(){
  		$data = [
- 			'kavling'  => $this->kavling->tampilDataKavling('tb_kavling'),
+ 			'kavling'  => $this->kavling->tampil_kavling('tb_kavling'),
  			'title' => 'Halaman Data kavling',
  			'id_tabel' => 'tabel_kavling'
  		];
@@ -160,16 +247,62 @@
  		$this->load->view('admin/templet/footer', $data);
  	}
  	public function halaman_tambah_kavling(){
- 		echo "hu";
+ 		$data = [
+ 			'title'    => 'Halaman Tambah Data kavling',
+ 		];
+
+ 		$this->load->view('admin/templet/header', $data);
+ 		$this->load->view('admin/templet/sidebar');
+ 		$this->load->view('admin/halaman_tambah_kavling');
+ 		$this->load->view('admin/templet/footer');
  	}
  	public function tambah_kavling(){
+ 		$id_kavling 	 = $this->input->post('id_kavling');
+ 		$noblock		 = $this->input->post('no_block');
+ 		$luas_tanah		 = $this->input->post('luas_tanah');
+ 		$no_sertifikat	 = $this->input->post('no_sertifikat');
+
+ 		$data        = [
+ 			'id_block' 	    => $id_kavling,
+ 			'noblock'   	=> $noblock,
+ 			'luas_tanah' 	=> $luas_tanah,
+ 			'no_sertifikat' => $no_sertifikat,
+ 		];
+
+ 		$tambah = $this->kavling->tambah_kavling('tb_kavling', $data);
+
+ 		if($tambah){
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-success" style="width: 100%; text-align: center">SELAMAT DATA BERHASIL DI MASUKAN</div>');
+ 			redirect('Admin/data_kavling');
+ 		}else{
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-danger" style="width: 100%;text-align: center">DATA GAGAL DI MASUKAN</div>');
+ 			redirect('Admin/data_kavling');
+ 		}
 
  	}
- 	public function hapus_kavling(){
+ 	public function hapus_kavling($id){
+ 		$where = ['id_block' => $id];
+ 		$hapus = $this->kavling->hapus_kavling('tb_kavling', $where);
 
+ 		if($hapus){
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-success" style="width: 100%; text-align: center">SELAMAT DATA BERHASIL DI HAPUS</div>');
+ 			redirect('Admin/data_kavling');
+ 		}else{
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-danger" style="width: 100%;text-align: center">DATA GAGAL DI HAPUS</div>');
+ 			redirect('Admin/data_kavling');
+ 		}
  	}
- 	public function halaman_edit_kavling(){
+ 	public function halaman_edit_kavling($id){
+ 		$where = ['id_block' => $id];
+ 		$data = [
+ 			'kavling'  => $this->kavling->tampil_kavling('tb_kavling', $where),
+ 			'title'    => 'Halaman Edit Data kavling',
+ 		];
 
+ 		$this->load->view('admin/templet/header', $data);
+ 		$this->load->view('admin/templet/sidebar');
+ 		$this->load->view('admin/halaman_edit_kavling',$data);
+ 		$this->load->view('admin/templet/footer');
  	}
  	public function edit_kavling(){
 
@@ -215,4 +348,23 @@
  	}
 
 
+
+ 	public function cetak_laporan($nama, $table){
+ 		$model = "tampil_{$nama}";
+ 		$data = [
+ 			$nama =>  $this->$nama->$model($table),
+ 			'role' => $nama,
+ 			'nama_laporan' => "laporan data {$nama}"
+ 		];
+
+ 		$this->pdf->setPaper('A4', 'potrait');
+ 		$this->pdf->filename = "laporan_{$nama}.pdf";
+ 		$this->pdf->load_view('admin/laporan_pdf', $data);
+ 	}
+
+
  }
+
+
+
+
