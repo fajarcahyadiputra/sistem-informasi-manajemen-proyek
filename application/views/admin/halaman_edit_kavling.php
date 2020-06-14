@@ -29,10 +29,12 @@
 			<div class="card-header">
 				<h3>HALAMAN EDIT KAVLING</h3>
 			</div>
-			<form method="post" action="<?php echo base_url("admin/tambah_kavling") ?>">
+			<form method="post" action="<?php echo base_url("admin/edit_kavling") ?>">
 				<div class="form-group">
 					<label for="id_kavling">ID Kavling</label>
 					<input autocomplete="off" required=""  type="number" name="id_kavling" class="form-control" value="<?php echo $kavling->id_block ?>">
+					<input type="number" name="id_kavling_lama" hidden="" value="<?php echo $kavling->id_block ?>">
+
 				</div>
 				<div class="form-group">
 					<label for="no_block">No Block</label>
@@ -47,7 +49,7 @@
 					<input required="" autocomplete="off" type="text" name="no_sertifikat" class="form-control"  value="<?php echo $kavling->no_sertifikat ?>">
 				</div>
 				<div class="tombol-bawah">
-					<button type="submit" class="btn btn-primary" style="width: 200px;">Tambah <i class="fas fa-plus ml-2"></i></button>
+					<button type="submit" class="btn btn-primary" style="width: 200px;">Edit <i class="fas fa-edit ml-2"></i></button>
 					<button type="reset" class="btn btn-warning ml-2" style="width:200px">Reset</button>
 				</div>
 			</form>

@@ -27,7 +27,7 @@
      </div>
      <div class="col-md-6">
        <div class="tombol-atas">
-        <a href="<?php echo base_url('admin/cetak_semua_barcode') ?>"  class="btn btn-outline-info mb-4 " ><i class="fas fa-print mr-1"></i>Ceatak Laporan</a>
+        <a target="_blank" href="<?php echo base_url('admin/cetak_laporan/kavling/tb_kavling') ?>"  class="btn btn-outline-info mb-4 " ><i class="fas fa-print mr-1"></i>Ceatak Laporan</a>
         <a  href="<?php echo base_url('admin/halaman_tambah_kavling') ?>" class="btn btn-outline-info mb-4 mr-3" ><i class="fas fa-user-plus mr-1"></i>Tambah Kavling</a>
       </div>
     </div>
@@ -56,7 +56,7 @@
   <td>
    <div class="tombol-aksi">
     <a class="btn btn-info" href="<?php echo base_url('admin/halaman_edit_kavling/').$kv->id_block ?>"><i class="fa fa-edit"></i></a>
-    <a class="btn btn-danger ml-2" href="<?php echo base_url('admin/hapus_kavling/').$kv->id_block ?>"><i class="fa fa-trash"></i></a>
+    <a onclick="return confirm('Yakin?')" class="btn btn-danger ml-2" href="<?php echo base_url('admin/hapus_kavling/').$kv->id_block ?>"><i class="fa fa-trash"></i></a>
   </div>
 </td>
 </tr>

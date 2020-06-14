@@ -62,7 +62,7 @@
   <td>
    <div class="tombol-aksi">
     <a class="btn btn-info" href="<?php echo base_url('admin/halaman_edit_konsumen/').$ks->id_konsumen ?>"><i class="fa fa-edit"></i></a>
-    <a class="btn btn-danger ml-2" href="<?php echo base_url('admin/hapus_konsumen/').$ks->id_konsumen ?>"><i class="fa fa-trash"></i></a>
+    <a onclick="return confirm('Yakin?')" class="btn btn-danger ml-2" href="<?php echo base_url('admin/hapus_konsumen/').$ks->id_konsumen ?>"><i class="fa fa-trash"></i></a>
   </div>
 </td>
 </tr>

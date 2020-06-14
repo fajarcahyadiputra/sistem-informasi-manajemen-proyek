@@ -305,11 +305,35 @@
  		$this->load->view('admin/templet/footer');
  	}
  	public function edit_kavling(){
+ 		$id_kavling 	 = $this->input->post('id_kavling');
+ 		$noblock		 = $this->input->post('no_block');
+ 		$luas_tanah		 = $this->input->post('luas_tanah');
+ 		$no_sertifikat	 = $this->input->post('no_sertifikat');
+
+ 		$where = ['id_block' => $this->input->post('id_kavling_lama')];
+
+ 		$data        = [
+ 			'id_block' 	    => $id_kavling,
+ 			'noblock'   	=> $noblock,
+ 			'luas_tanah' 	=> $luas_tanah,
+ 			'no_sertifikat' => $no_sertifikat,
+ 		];
+
+ 		$edit = $this->kavling->edit_kavling('tb_kavling',$where, $data);
+
+ 		if($edit){
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-success" style="width: 100%; text-align: center">SELAMAT DATA BERHASIL DI EDIT</div>');
+ 			redirect('Admin/data_kavling');
+ 		}else{
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-danger" style="width: 100%;text-align: center">DATA GAGAL DI EDIT</div>');
+ 			redirect('Admin/data_kavling');
+ 		}
+
 
  	}
  	public function data_tukang(){
  		$data = [
- 			'tukang'  => $this->tukang->tampilDataTukang('tb_tukang'),
+ 			'tukang'  => $this->tukang->tampil_tukang('tb_tukang'),
  			'title' => 'Halaman Data Tukang',
  			'id_tabel' => 'tabel_tukang'
  		];
@@ -320,18 +344,91 @@
  		$this->load->view('admin/templet/footer', $data);
  	}
  	public function halaman_tambah_tukang(){
- 		echo "hu";
+ 		$data = [
+ 			'title' => 'Halaman Tambah Tukang',
+ 		];
+
+ 		$this->load->view('admin/templet/header', $data);
+ 		$this->load->view('admin/templet/sidebar');
+ 		$this->load->view('admin/halaman_tambah_tukang');
+ 		$this->load->view('admin/templet/footer', $data);
  	}
  	public function tambah_tukang(){
+ 		$id_tukang = $this->input->post('id_tukang');
+ 		$nama 	   = $this->input->post('nama');
+ 		$jabatan   = $this->input->post('jabatan');
+ 		$alamat    = $this->input->post('alamat');
+ 		$nohp 	   = $this->input->post('nohp');
+
+ 		$data        = [
+ 			'id_tukang' 	    => $id_tukang,
+ 			'nama_tukang'   	=> $nama,
+ 			'jabatan' 			=> $jabatan,
+ 			'alamat' 			=> $alamat,
+ 			'nohp' 				=> $nohp,
+ 		];
+
+ 		$tambah = $this->tukang->tambah_tukang('tb_tukang', $data);
+
+ 		if($tambah){
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-success" style="width: 100%; text-align: center">SELAMAT DATA BERHASIL DI MASUKAN</div>');
+ 			redirect('Admin/data_tukang');
+ 		}else{
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-danger" style="width: 100%;text-align: center">DATA GAGAL DI MASUKAN</div>');
+ 			redirect('Admin/data_tukang');
+ 		}
 
  	}
- 	public function hapus_tukang(){
+ 	public function hapus_tukang($id){
+ 		$where = ['id_tukang' => $id];
+ 		$hapus = $this->tukang->hapus_tukang('tb_tukang', $where);
 
+ 		if($hapus){
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-success" style="width: 100%; text-align: center">SELAMAT DATA BERHASIL DI HAPUS</div>');
+ 			redirect('Admin/data_tukang');
+ 		}else{
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-danger" style="width: 100%;text-align: center">DATA GAGAL DI HAPUS</div>');
+ 			redirect('Admin/data_tukang');
+ 		}
  	}
- 	public function halaman_edit_tukang(){
+ 	public function halaman_edit_tukang($id){
+ 		$where = ['id_tukang' => $id];
+ 		$data = [
+ 			'tukang'  => $this->tukang->tampil_tukang('tb_tukang', $where),
+ 			'title'    => 'Halaman Edit Data Tukang',
+ 		];
 
+ 		$this->load->view('admin/templet/header', $data);
+ 		$this->load->view('admin/templet/sidebar');
+ 		$this->load->view('admin/halaman_edit_tukang',$data);
+ 		$this->load->view('admin/templet/footer');
  	}
  	public function edit_tukang(){
+ 		$id_tukang = $this->input->post('id_tukang');
+ 		$nama 	   = $this->input->post('nama');
+ 		$jabatan   = $this->input->post('jabatan');
+ 		$alamat    = $this->input->post('alamat');
+ 		$nohp 	   = $this->input->post('nohp');
+
+ 		$where     = ['id_tukang' => $this->input->post('id_tukang_lama')];
+
+ 		$data        = [
+ 			'id_tukang' 	    => $id_tukang,
+ 			'nama_tukang'   	=> $nama,
+ 			'jabatan' 			=> $jabatan,
+ 			'alamat' 			=> $alamat,
+ 			'nohp' 				=> $nohp,
+ 		];
+
+ 		$edit = $this->tukang->edit_tukang('tb_tukang',$where, $data);
+
+ 		if($edit){
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-success" style="width: 100%; text-align: center">SELAMAT DATA BERHASIL DI EDIT</div>');
+ 			redirect('Admin/data_tukang');
+ 		}else{
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-danger" style="width: 100%;text-align: center">DATA GAGAL DI EDIT</div>');
+ 			redirect('Admin/data_tukang');
+ 		}
 
  	}
  	public function pembayaran_cash(){

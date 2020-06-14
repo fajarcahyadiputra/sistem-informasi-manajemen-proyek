@@ -23,4 +23,8 @@ class M_kavling extends CI_Model
 		$this->db->where($where);
 		return $this->db->delete($table);
 	}
+	public function edit_kavling($table, $where, $data){
+		$this->db->where($where);
+		return $this->db->update($table, $data);
+	}
 }
