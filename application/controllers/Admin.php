@@ -433,7 +433,7 @@
  	}
  	public function pembayaran_cash(){
  		$data = [
- 			'tukang'  => $this->cash->tampilDataCash('tb_cash'),
+ 			'cash'  => $this->cash->tampil_cash('tb_cash'),
  			'title' => 'Halaman Data Cash',
  			'id_tabel' => 'tabel_cash'
  		];
@@ -443,9 +443,132 @@
  		$this->load->view('admin/data_cash', $data);
  		$this->load->view('admin/templet/footer', $data);
  	}
+ 	public function halaman_tambah_cash(){
+ 		$data = [
+ 			'konsumen' => $this->konsumen->tampil_konsumen('tb_konsumen'),
+ 			'block'	   => $this->kavling->tampil_kavling('tb_kavling'),
+ 			'title' => 'Halaman Tambah Pembayaran Cash',
+ 		];
 
+ 		$this->load->view('admin/templet/header', $data);
+ 		$this->load->view('admin/templet/sidebar');
+ 		$this->load->view('admin/halaman_tambah_cash', $data);
+ 		$this->load->view('admin/templet/footer');
+ 	}
 
+ 	public function tambah_cash(){
 
+ 		$id_cash   		= $this->input->post('id_cash');
+ 		$id_konsumen   	= $this->input->post('id_konsumen');
+ 		$block   		= $this->input->post('block');
+ 		$type   		= $this->input->post('type');
+ 		$spesifikasi   	= $this->input->post('spesifikasi');
+ 		$harga   		= $this->input->post('harga');
+ 		$uang_muka   	= $this->input->post('uang_muka');
+ 		$pembayaran  	= $this->input->post('pembayaran');
+ 		$jumblah   		= $this->input->post('jumblah');
+ 		$keterangan   	= $this->input->post('keterangan');
+ 		
+ 		$data           = [
+ 			'id_cash'   	=> $id_cash,
+ 			'id_konsumen'   => $id_konsumen,
+ 			'id_block'   	=> $block,
+ 			'type'   		=> $type,
+ 			'spesifikasi'   => $spesifikasi,
+ 			'harga'   		=> $harga,
+ 			'dp'   			=> $uang_muka,
+ 			'pembayaran'   	=> $pembayaran,
+ 			'jumblah'   	=> $jumblah,
+ 			'keterangan'   	=> $keterangan,
+ 		];
+
+ 		$tambah             = $this->cash->tambah_cash('tb_cash', $data);
+
+ 		if($tambah){
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-success" style="width: 100%; text-align: center">SELAMAT DATA BERHASIL DI MASUKAN</div>');
+ 			redirect('Admin/pembayaran_cash');
+ 		}else{
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-danger" style="width: 100%;text-align: center">DATA GAGAL DI MASUKAN</div>');
+ 			redirect('Admin/pembayaran_cash');
+ 		}
+ 	}
+
+ 	public function hapus_cash($id){
+ 		$where = ['id_cash' => $id];
+ 		$hapus = $this->cash->hapus_cash('tb_cash', $where);
+
+ 		if($hapus){
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-success" style="width: 100%; text-align: center">SELAMAT DATA BERHASIL DI HAPUS</div>');
+ 			redirect('Admin/pembayaran_cash');
+ 		}else{
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-danger" style="width: 100%;text-align: center">DATA GAGAL DI HAPUS</div>');
+ 			redirect('Admin/pembayaran_cash');
+ 		}
+ 	}
+
+ 	public function halaman_edit_cash($id){
+ 		$where        = ['id_cash' => $id];
+ 		$data = [
+ 			'cash'     => $this->cash->tampil_cash('tb_cash', $where),
+ 			'konsumen' => $this->konsumen->tampil_konsumen('tb_konsumen'),
+ 			'block'	   => $this->kavling->tampil_kavling('tb_kavling'),
+ 			'title' => 'Halaman Edit Pembayaran Cash',
+ 		];
+
+ 		$this->load->view('admin/templet/header', $data);
+ 		$this->load->view('admin/templet/sidebar');
+ 		$this->load->view('admin/halaman_edit_cash', $data);
+ 		$this->load->view('admin/templet/footer');
+ 	}
+ 	public function edit_cash(){
+ 		$id_cash   		= $this->input->post('id_cash');
+ 		$id_konsumen   	= $this->input->post('id_konsumen');
+ 		$block   		= $this->input->post('block');
+ 		$type   		= $this->input->post('type');
+ 		$spesifikasi   	= $this->input->post('spesifikasi');
+ 		$harga   		= $this->input->post('harga');
+ 		$uang_muka   	= $this->input->post('uang_muka');
+ 		$pembayaran  	= $this->input->post('pembayaran');
+ 		$jumblah   		= $this->input->post('jumblah');
+ 		$keterangan   	= $this->input->post('keterangan');
+
+ 		$where          = ['id_cash' => $this->input->post('id_cash_lama')];
+ 		
+ 		$data           = [
+ 			'id_cash'   	=> $id_cash,
+ 			'id_konsumen'   => $id_konsumen,
+ 			'id_block'   	=> $block,
+ 			'type'   		=> $type,
+ 			'spesifikasi'   => $spesifikasi,
+ 			'harga'   		=> $harga,
+ 			'dp'   			=> $uang_muka,
+ 			'pembayaran'   	=> $pembayaran,
+ 			'jumblah'   	=> $jumblah,
+ 			'keterangan'   	=> $keterangan,
+ 		];
+
+ 		$edit = $this->cash->edit_cash('tb_cash',$where, $data);
+
+ 		if($edit){
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-success" style="width: 100%; text-align: center">SELAMAT DATA BERHASIL DI EDIT</div>');
+ 			redirect('Admin/pembayaran_cash');
+ 		}else{
+ 			$this->session->set_flashdata('pesan','<div class="alert alert-danger" style="width: 100%;text-align: center">DATA GAGAL DI EDIT</div>');
+ 			redirect('Admin/pembayaran_cash');
+ 		}
+ 	}
+ 	public function halaman_detail_cash($id){
+ 		$where        = ['id_cash' => $id];
+ 		$data = [
+ 			'cash'     => $this->cash->tampil_cash('tb_cash', $where),
+ 			'title'    => 'Halaman Edit Pembayaran Cash',
+ 		];
+
+ 		$this->load->view('admin/templet/header', $data);
+ 		$this->load->view('admin/templet/sidebar');
+ 		$this->load->view('admin/halaman_detail_cash', $data);
+ 		$this->load->view('admin/templet/footer');
+ 	}
  	public function cetak_laporan($nama, $table){
  		$model = "tampil_{$nama}";
  		$data = [

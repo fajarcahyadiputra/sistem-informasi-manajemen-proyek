@@ -43,7 +43,7 @@
       <th class="text-center">Jabatan</th>
       <th class="text-center">Alamat</th>
       <th class="text-center">Nomer HP</th>
-      <th class="text-center">AKsi</th>
+      <th class="text-center">Aksi</th>
     </tr>
   </thead>
   <tbody>
