@@ -16,6 +16,23 @@ class M_cash extends CI_Model
 			return $this->db->get_where($table, $where)->row();
 		}
 	}
+	public function id_cash($table){
+		$this->db->select("RIGHT(tb_cash.id_cash,4) as kode", false);
+		$this->db->order_by('kode','desc');
+		$this->db->limit(1);
+		$query = $this->db->get($table);
+
+		if($query->num_rows() > 0){
+			$data = $query->row();
+			$kode = intval($data->kode) + 1;
+		}else{
+			$kode = 1;
+		}
+
+		$date = date('him');
+		$batas = str_pad($kode,4,'0', STR_PAD_LEFT);
+		return $date.$batas;
+	}
 	public function tambah_cash($table, $data){
 		return $this->db->insert($table, $data);
 	}
