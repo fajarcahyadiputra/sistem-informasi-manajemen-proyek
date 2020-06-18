@@ -53,7 +53,7 @@
                     <div class="tombol-bawah">
                         <button type="submit" class="btn btn-primary" style="width: 200px;">Tambah <i class="fas fa-plus ml-2"></i></button>
                         <button type="reset" class="btn btn-warning ml-2" style="width:200px">Reset</button>
-                        <a href="<?php echo base_url('admin/data_material_stok') ?>" class="btn btn-primary ml-2" style="width:200px">Kembali</a>
+                        <a href="<?php echo base_url('admin/data_stok_material') ?>" class="btn btn-primary ml-2" style="width:200px">Kembali</a>
                     </div>
                 </form>
             </section>

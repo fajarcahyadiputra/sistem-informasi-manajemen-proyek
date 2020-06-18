@@ -851,7 +851,7 @@ class Admin extends CI_Controller
 
 		$this->load->view('admin/templet/header', $data);
 		$this->load->view('admin/templet/sidebar');
-		$this->load->view('admin/data_pengeluaran_material', $data);
+		$this->load->view('admin/data_proses', $data);
 		$this->load->view('admin/templet/footer');
 	}
 	public function halaman_tambah_proses()

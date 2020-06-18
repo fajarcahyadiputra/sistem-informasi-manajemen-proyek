@@ -29,7 +29,7 @@
   <!-- ruangadmin -->
   <script src="<?php echo base_url('assets/') ?>ruangAdmin/js/ruang-admin.min.js"></script>
   <!-- datatable -->
-  <script type="text/javascript" src="<?php echo base_url() ?>assets/datatable/js/jquery.datatables.min.js"></script>
+  <script type="text/javascript" src="<?php echo base_url() ?>assets/datatable/js/jquery.dataTables.min.js"></script>
   <script src="<?= base_url() ?>assets/datatables-responsive/js/dataTables.responsive.min.js"></script>
   <script src="<?= base_url() ?>assets/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
   <!-- sweetalert -->
